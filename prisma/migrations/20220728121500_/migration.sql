@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "User" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
@@ -12,17 +12,18 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Route" (
-    "id" BIGSERIAL NOT NULL,
-    "userID" BIGINT NOT NULL,
+    "id" SERIAL NOT NULL,
+    "endpoint" TEXT NOT NULL,
+    "userID" INTEGER NOT NULL,
 
     CONSTRAINT "Route_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Message" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "wholeMessage" TEXT NOT NULL,
-    "routeID" BIGINT NOT NULL,
+    "routeID" INTEGER NOT NULL,
 
     CONSTRAINT "Message_pkey" PRIMARY KEY ("id")
 );
@@ -32,6 +33,9 @@ CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Route_endpoint_key" ON "Route"("endpoint");
 
 -- AddForeignKey
 ALTER TABLE "Route" ADD CONSTRAINT "Route_userID_fkey" FOREIGN KEY ("userID") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
