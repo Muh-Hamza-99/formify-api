@@ -15,3 +15,7 @@ model User {
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
 }
+
+model Route {
+  id BigInt @id @default(autoincrement())
+}
