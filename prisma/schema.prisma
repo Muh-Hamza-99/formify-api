@@ -19,3 +19,8 @@ model User {
 model Route {
   id BigInt @id @default(autoincrement())
 }
+
+model Message {
+  id BigInt @id @default(autoincrement())
+  wholeMessage String
+}
