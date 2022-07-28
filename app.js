@@ -5,6 +5,7 @@ const AppError = require("./utilities/app-error");
 const globalErrorHandler = require("./middleware/error-handler");
 
 // Router Imports
+const messageRouter = require("./routes/message-routes.js");
 const routeRouter = require("./routes/route-routes.js");
 const userRouter = require("./routes/user-routes.js");
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 app.use(express.static(__dirname + "/public"));
 
 // Router Middleware
+app.use("/api/v1/messages", messageRouter);
 app.use("/api/v1/routes", routeRouter);
 app.use("/api/v1/users", userRouter);
 
