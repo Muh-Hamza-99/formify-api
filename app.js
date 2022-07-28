@@ -1,0 +1,22 @@
+const express = require("express");
+const app = express();
+
+const AppError = require("./utilities/app-error");
+const globalErrorHandler = require("./middleware/error-handler");
+
+// Router Imports
+
+app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+app.use(express.static(__dirname + "/public"));
+
+// Router Middleware
+
+app.all("*", (req, res, next) => {
+    res.status(404).json({ status: "fail", message: `Can't find ${req.originalUrl} on this server!` });
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+app.use(globalErrorHandler);
+
+module.exports = app;
