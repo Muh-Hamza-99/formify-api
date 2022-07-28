@@ -17,3 +17,15 @@ const registerSchema = JOI.object({
     "any.required": `"email" is a required field`,
   }),
 });
+
+const loginSchema = JOI.object({
+    password: JOI.string().min(12).trim().required().messages({
+      "string.base": `"password" should be a 'string'`,
+      "string.min": `"password" should have a minimum length of {#limit}`,
+      "any.required": `"password" is a required field`,
+    }),
+    email: JOI.email().required().messages({
+      "email.base": `"email" should be an 'email'`,
+      "any.required": `"email" is a required field`,
+    }),
+});
