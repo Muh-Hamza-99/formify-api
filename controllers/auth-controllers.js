@@ -32,3 +32,8 @@ const login = catchAsync(async (req, res, next) => {
     if (!user) return next(new AppError("Incorrect email/password!", 401));
     createSendToken(user, 200, res);
 });
+
+module.exports = {
+    register,
+    login,
+};
