@@ -12,8 +12,8 @@ const registerSchema = JOI.object({
     "string.min": `"password" should have a minimum length of {#limit}`,
     "any.required": `"password" is a required field`,
   }),
-  email: JOI.email().required().messages({
-    "email.base": `"email" should be an 'email'`,
+  email: JOI.string().email().required().messages({
+    "string.base": `"email" should be an 'string'`,
     "any.required": `"email" is a required field`,
   }),
 });
@@ -24,8 +24,13 @@ const loginSchema = JOI.object({
       "string.min": `"password" should have a minimum length of {#limit}`,
       "any.required": `"password" is a required field`,
     }),
-    email: JOI.email().required().messages({
-      "email.base": `"email" should be an 'email'`,
+    email: JOI.string().email().required().messages({
+      "string.base": `"email" should be an 'string'`,
       "any.required": `"email" is a required field`,
     }),
 });
+
+module.exports = {
+    registerSchema,
+    loginSchema,
+};
