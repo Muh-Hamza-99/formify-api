@@ -21,7 +21,7 @@ const createSendToken = (user, statusCode, res) => {
 
 const register = catchAsync(async (req, res, next) => {
     const { username, email, password } = req.body;
-    const user = await prisma.user.create({ username, email, password });
+    const user = await prisma.user.create({ data: { username, email, password } });
     createSendToken(user, 201, res);
 }); 
 
