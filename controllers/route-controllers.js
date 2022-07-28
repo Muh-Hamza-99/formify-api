@@ -16,7 +16,7 @@ const getOneRoute = catchAsync(async (req, res, next) => {
 });
 
 const createRoute = catchAsync(async (req, res, next) => {
-    const route = await prisma.route.create(req.body);
+    const route = await prisma.route.create({ data: req.body });
     res.status(201).json({ status: "success", data: { route } });
 });
 

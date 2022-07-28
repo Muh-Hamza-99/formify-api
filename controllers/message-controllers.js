@@ -16,7 +16,7 @@ const getOneMessage = catchAsync(async (req, res, next) => {
 });
 
 const createMessage = catchAsync(async (req, res, next) => {
-    const message = await prisma.message.create(req.body);
+    const message = await prisma.message.create({ data: req.body });
     res.status(201).json({ status: "success", data: { message } });
 });
 
