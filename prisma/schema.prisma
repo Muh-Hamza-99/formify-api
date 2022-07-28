@@ -8,19 +8,25 @@ datasource db {
 }
 
 model User {
-  id BigInt @id @default(autoincrement())
+  id        BigInt   @id @default(autoincrement())
   username  String   @unique
   email     String   @unique
   password  String
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
+  routes    Route[]
 }
 
 model Route {
-  id BigInt @id @default(autoincrement())
+  id       BigInt    @id @default(autoincrement())
+  messages Message[]
+  user     User      @relation(fields: [userID], references: [id])
+  userID   BigInt
 }
 
 model Message {
-  id BigInt @id @default(autoincrement())
+  id           BigInt  @id @default(autoincrement())
   wholeMessage String
+  route        Route  @relation(fields: [routeID], references: [id])
+  routeID      BigInt
 }
