@@ -23,7 +23,8 @@ const createRoute = catchAsync(async (req, res, next) => {
 const publicRoute = catchAsync(async (req, res, next) => {
     const { endpointID } = req.params;
     const route = await prisma.route.findUnique({ where: { endpoint: endpointID } });
-    res.status(200);
+    const message = await prisma.message.create({ data: { wholeMessage: JSON.stringify(req.body), routeID: route.id } });
+    res.status(200).json({ status: "success", data: "Success" });
 });
 
 const deleteRoute = catchAsync(async (req, res, next) => {
