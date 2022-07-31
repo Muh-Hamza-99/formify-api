@@ -23,6 +23,7 @@ const createRoute = catchAsync(async (req, res, next) => {
 const publicRoute = catchAsync(async (req, res, next) => {
     const { endpointID } = req.params;
     const route = await prisma.route.findUnique({ where: { endpoint: endpointID } });
+    if (!route) return next(new AppError("No route with the provided endpoint ID", 404));
     const message = await prisma.message.create({ data: { wholeMessage: JSON.stringify(req.body), routeID: route.id } });
     res.status(200).json({ status: "success", data: "Success" });
 });
