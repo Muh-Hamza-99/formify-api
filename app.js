@@ -13,6 +13,8 @@ app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 app.use(express.static(__dirname + "/public"));
 
+app.set("view engine", "ejs");
+
 // Router Middleware
 app.use("/api/v1/messages", messageRouter);
 app.use("/api/v1/routes", routeRouter);
