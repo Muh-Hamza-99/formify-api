@@ -9,12 +9,14 @@ const {
     deleteRoute,
  } = require("../controllers/route-controllers");
 
+const protect = require("../middleware/protect");
+
 router.post("/:endpointID", publicRoute);
 
 router
     .route("/")
     .get(getAllRoutes)
-    .post(createRoute);
+    .post(protect, createRoute);
 
 router
     .route("/:id")

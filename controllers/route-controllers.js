@@ -3,6 +3,7 @@ const prisma = require("../database/prisma");
 const AppError = require("../utilities/app-error");
 const catchAsync = require("../utilities/catch-async");
 const sendEmail = require("../utilities/send-email");
+const createEndpoint = require("../utilities/create-endpoint");
 
 const getAllRoutes = catchAsync(async (req, res, next) => {
     const routes = await prisma.route.findMany({});
@@ -17,7 +18,8 @@ const getOneRoute = catchAsync(async (req, res, next) => {
 });
 
 const createRoute = catchAsync(async (req, res, next) => {
-    const route = await prisma.route.create({ data: req.body });
+    const endpoint = createEndpoint();
+    const route = await prisma.route.create({ data: { endpoint, userID: req.user.id } });
     res.status(201).json({ status: "success", data: { route } });
 });
 
