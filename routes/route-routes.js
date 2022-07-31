@@ -5,8 +5,11 @@ const {
     getAllRoutes,
     getOneRoute,
     createRoute,
+    publicRoute,
     deleteRoute,
  } = require("../controllers/route-controllers");
+
+router.post("/:endpointID", publicRoute);
 
 router
     .route("/")

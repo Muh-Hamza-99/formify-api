@@ -20,6 +20,12 @@ const createRoute = catchAsync(async (req, res, next) => {
     res.status(201).json({ status: "success", data: { route } });
 });
 
+const publicRoute = catchAsync(async (req, res, next) => {
+    const { endpointID } = req.params;
+    const route = await prisma.route.findUnique({ where: { endpoint: endpointID } });
+    res.status(200);
+});
+
 const deleteRoute = catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const route = await prisma.route.delete({ where: { id: Number(id) } }); 
@@ -31,5 +37,6 @@ module.exports = {
     getAllRoutes,
     getOneRoute,
     createRoute,
+    publicRoute,
     deleteRoute,
 };
