@@ -2,6 +2,7 @@ const prisma = require("../database/prisma");
 
 const AppError = require("../utilities/app-error");
 const catchAsync = require("../utilities/catch-async");
+const sendEmail = require("../utilities/send-email");
 
 const getAllRoutes = catchAsync(async (req, res, next) => {
     const routes = await prisma.route.findMany({});
@@ -25,7 +26,13 @@ const publicRoute = catchAsync(async (req, res, next) => {
     const route = await prisma.route.findUnique({ where: { endpoint: endpointID } });
     if (!route) return next(new AppError("No route with the provided endpoint ID", 404));
     const message = await prisma.message.create({ data: { wholeMessage: JSON.stringify(req.body), routeID: route.id } });
-    res.render("redirect", { endpointID: route.endpoint });
+    const options = { email: process.env.EMAIL_USERNAME, subject: "New Message", message: message.wholeMessage };
+    try {
+        await sendEmail(options);
+        res.render("redirect", { endpointID: route.endpoint });
+    } catch (error) {
+        return next(new AppError("Error in sending email to the destination email!", 502));
+    };
 });
 
 const deleteRoute = catchAsync(async (req, res, next) => {
