@@ -7,7 +7,7 @@ const createEndpoint = require("../utilities/create-endpoint");
 const formatMessage = require("../utilities/format-message");
 
 const getAllRoutes = catchAsync(async (req, res, next) => {
-    const routes = await prisma.route.findMany({});
+    const routes = await prisma.route.findMany({ where: { userID: req.user.id} });
     res.status(200).json({ status: "success", results: routes.length, data: { routes }});
 });
 
