@@ -8,8 +8,9 @@ const {
 } = require("../controllers/message-controllers");
 
 const protect = require("../middleware/protect");
+const isRouteOwner = require("../middleware/is-route-owner");
 
-router.use(protect);
+router.use(protect, isRouteOwner);
 
 router
     .route("/")
