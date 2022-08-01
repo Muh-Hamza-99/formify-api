@@ -29,13 +29,21 @@ const updateUser = catchAsync(async (req, res, next) => {
 
 const deleteUser = catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const user = await prisma.user.delete({ where: { id: Number(id) } });
+    const user = await prisma.user.findUnique({ where: { id: Number(id) } });
+    const routes = await prisma.route.findMany({ where: { userID: Number(user.id) } });
+    routes.forEach(async route => await prisma.message.deleteMany({ where: { routeID: Number(route.id) } }));
+    await prisma.route.deleteMany({ where: { userID: Number(user.id) } });
+    await prisma.user.delete({ where: { id: Number(id) } });
     if (!user) return next(new AppError("No user with the provided ID!", 404));
     res.status(204).json({ status: "success", data: null });
 });
 
 const deleteMe = catchAsync(async (req, res, next) => {
-    const user = await prisma.user.update({ where: { id: Number(req.user.id) }, data: { active: false } });
+    const user = await prisma.user.findUnique({ where: { id: Number(req.user.id) } });
+    const routes = await prisma.route.findMany({ where: { userID: Number(user.id) } });
+    routes.forEach(async route => await prisma.message.deleteMany({ where: { routeID: Number(route.id) } }));
+    await prisma.route.deleteMany({ where: { userID: Number(user.id) } });
+    await prisma.user.update({ where: { id: Number(req.user.id) }, data: { active: false } });
     if (!user) return next(new AppError("No user with the provided ID!", 404));
     res.status(204).json({ status: "success", data: null });
 });
