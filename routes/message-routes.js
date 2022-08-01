@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 const { 
     getAllMessages,
@@ -18,7 +18,7 @@ router
     .post(createMessage);
 
 router
-    .route("/:id")
+    .route("/:orderID")
     .get(getOneMessage)
     .delete(deleteMessage);
 

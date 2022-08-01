@@ -8,7 +8,11 @@ const {
     deleteRoute,
 } = require("../controllers/route-controllers");
 
-const protect = require("../middleware/protect");;
+const messageRouter = require("./message-routes");
+
+const protect = require("../middleware/protect");
+
+router.use("/:routeID/messages", messageRouter);
 
 router.use(protect);
 
