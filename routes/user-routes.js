@@ -15,9 +15,12 @@ const {
 } = require("../controllers/user-controllers");
 
 const protect = require("../middleware/protect");
+const getMe = require("../middleware/get-me");
 
 router.post("/register", register);
 router.post("/login", login);
+
+router.get("/me", protect, getMe, getOneUser);
 
 router.use(protect);
 
