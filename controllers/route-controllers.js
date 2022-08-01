@@ -41,8 +41,10 @@ const publicRoute = catchAsync(async (req, res, next) => {
 
 const deleteRoute = catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const route = await prisma.route.delete({ where: { id: Number(id) } }); 
+    const route = await prisma.route.findUnique({ where: { id: Number(id) } }); 
     if (!route) return next(new AppError("No route with the provided ID!", 404));
+    await prisma.message.deleteMany({ where: { routeID: Number(route.id) } });
+    await prisma.route.delete({ where: { id: Number(id) } });
     res.status(204).json({ status: "success", data: null });
 });
 
