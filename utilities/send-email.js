@@ -23,11 +23,11 @@ SendGrid.setApiKey(process.env.SENDGRID_API_KEY);
 const sendEmail = async (options) => {
     const email = {
         to: options.email,
-        from: "amazon-price-checker@example.com",
+        from: process.env.SENDGRID_FROM_EMAIL,
         subject: options.subject,
         text: options.body,
     };  
-    return SendGrid(email);
+    return SendGrid.send(email);
 };
 
 module.exports = sendEmail;
