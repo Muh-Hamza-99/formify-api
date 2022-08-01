@@ -13,7 +13,7 @@ const protect = catchAsync(async (req, res, next) => {
     if (authorisation && authorisation.startsWith("Bearer")) token = authorisation.split(" ")[1];
     if (!token) return next(new AppError("You are not logged in! Please login to get access!", 401));
     const decoded = await promisify(JWT.verify)(token, process.env.JWT_SECRET);
-    const user = await prisma.user.findUnique({ where: { id: Number(decoded.id) } });
+    const user = await prisma.user.findUnique({ where: { id: Number(decoded.id) }, include: { routes: true } });
     if (!user) return next(new AppError("The user belonging to this user does no longer token!", 401));
     // if (user.changedPasswordAfter(decoded.iat)) return next(new AppError("User has recently changed password! Please log in again!", 401));
     req.user = user;
