@@ -34,10 +34,17 @@ const deleteUser = catchAsync(async (req, res, next) => {
     res.status(204).json({ status: "success", data: null });
 });
 
+const deleteMe = catchAsync(async (req, res, next) => {
+    const user = await prisma.user.update({ where: { id: Number(req.user.id) }, data: { active: false } });
+    if (!user) return next(new AppError("No user with the provided ID!", 404));
+    res.status(204).json({ status: "success", data: null });
+});
+
 module.exports = {
     getAllUsers,
     getOneUser,
     createUser,
     updateUser,
     deleteUser,
+    deleteMe,
 };

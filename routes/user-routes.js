@@ -12,6 +12,7 @@ const {
     createUser,
     updateUser,
     deleteUser,
+    deleteMe,
 } = require("../controllers/user-controllers");
 
 const protect = require("../middleware/protect");
@@ -21,6 +22,7 @@ router.post("/register", register);
 router.post("/login", login);
 
 router.get("/me", protect, getMe, getOneUser);
+router.patch("/deleteMe", protect, deleteMe);
 
 router.use(protect);
 
