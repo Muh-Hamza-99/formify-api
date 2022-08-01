@@ -6,7 +6,11 @@ const {
     getOneMessage,
     createMessage,
     deleteMessage,
- } = require("../controllers/message-controllers");
+} = require("../controllers/message-controllers");
+
+const protect = require("../middleware/protect");
+
+router.use(protect);
 
 router
     .route("/")

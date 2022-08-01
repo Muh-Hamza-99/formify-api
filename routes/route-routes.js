@@ -13,10 +13,12 @@ const protect = require("../middleware/protect");
 
 router.post("/:endpointID", publicRoute);
 
+router.use(protect);
+
 router
     .route("/")
     .get(getAllRoutes)
-    .post(protect, createRoute);
+    .post(createRoute);
 
 router
     .route("/:id")
