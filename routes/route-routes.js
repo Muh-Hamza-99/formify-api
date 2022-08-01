@@ -5,13 +5,10 @@ const {
     getAllRoutes,
     getOneRoute,
     createRoute,
-    publicRoute,
     deleteRoute,
- } = require("../controllers/route-controllers");
+} = require("../controllers/route-controllers");
 
-const protect = require("../middleware/protect");
-
-router.post("/:endpointID", publicRoute);
+const protect = require("../middleware/protect");;
 
 router.use(protect);
 

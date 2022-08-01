@@ -4,6 +4,8 @@ const app = express();
 const AppError = require("./utilities/app-error");
 const globalErrorHandler = require("./middleware/error-handler");
 
+const { publicRoute } = require("./controllers/route-controllers");
+
 // Router Imports
 const messageRouter = require("./routes/message-routes.js");
 const routeRouter = require("./routes/route-routes.js");
@@ -19,6 +21,8 @@ app.set("view engine", "ejs");
 app.use("/api/v1/messages", messageRouter);
 app.use("/api/v1/routes", routeRouter);
 app.use("/api/v1/users", userRouter);
+
+app.post("/:endpointID", publicRoute)
 
 app.all("*", (req, res, next) => {
     res.status(404).json({ status: "fail", message: `Can't find ${req.originalUrl} on this server!` });
