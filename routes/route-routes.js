@@ -11,6 +11,7 @@ const {
 const messageRouter = require("./message-routes");
 
 const protect = require("../middleware/protect");
+const isRouteOwner = require("../middleware/is-route-owner");
 
 router.use("/:routeID/messages", messageRouter);
 
@@ -23,7 +24,7 @@ router
 
 router
     .route("/:id")
-    .get(getOneRoute)
-    .delete(deleteRoute);
+    .get(isRouteOwner, getOneRoute)
+    .delete(isRouteOwner, deleteRoute);
 
 module.exports = router;
