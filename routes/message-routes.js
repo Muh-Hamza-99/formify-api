@@ -4,7 +4,6 @@ const router = express.Router({ mergeParams: true });
 const { 
     getAllMessages,
     getOneMessage,
-    createMessage,
     deleteMessage,
 } = require("../controllers/message-controllers");
 
@@ -15,10 +14,9 @@ router.use(protect);
 router
     .route("/")
     .get(getAllMessages)
-    .post(createMessage);
 
 router
-    .route("/:orderID")
+    .route("/:messageID")
     .get(getOneMessage)
     .delete(deleteMessage);
 
