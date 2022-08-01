@@ -17,6 +17,7 @@ const {
 
 const protect = require("../middleware/protect");
 const getMe = require("../middleware/get-me");
+const restrictToAdmin = require("../middleware/restrict-to-admin");
 
 router.post("/register", register);
 router.post("/login", login);
@@ -24,7 +25,7 @@ router.post("/login", login);
 router.get("/me", protect, getMe, getOneUser);
 router.patch("/deleteMe", protect, deleteMe);
 
-router.use(protect);
+router.use(protect, restrictToAdmin);
 
 router
     .route("/")
