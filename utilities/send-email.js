@@ -25,7 +25,7 @@ const sendEmail = async (options) => {
         to: options.email,
         from: process.env.SENDGRID_FROM_EMAIL,
         subject: options.subject,
-        text: options.body,
+        html: options.body,
     };  
     return SendGrid.send(email);
 };
